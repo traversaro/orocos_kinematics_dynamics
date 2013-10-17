@@ -43,6 +43,10 @@ ENDIF ( NOT CMAKE_BUILD_TYPE )
 
 SET( KDL_CFLAGS "")
 
+if(MSVC)
+    set(CMAKE_DEBUG_POSTFIX "d")
+endif(MSVC)
+
 find_package(Eigen 3.0 QUIET)
 if(NOT Eigen_FOUND)
   include(${PROJ_SOURCE_DIR}/config/FindEigen3.cmake)
@@ -70,6 +74,8 @@ ENDIF(ENABLE_TESTS )
 
 OPTION(ENABLE_EXAMPLES OFF "Enable building of examples")
 
+set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
+
 add_definitions(-DEIGEN2_SUPPORT)
 
 ADD_SUBDIRECTORY( doc )
@@ -82,6 +88,8 @@ CONFIGURE_FILE(
   "${CMAKE_CURRENT_SOURCE_DIR}/cmake_uninstall.cmake.in"
   "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
   IMMEDIATE @ONLY)
+
+INSTALL(EXPORT orocos-kdl-target DESTINATION  share/orocos-kdl)
 
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/KDLConfig.cmake.in
   ${CMAKE_CURRENT_BINARY_DIR}/orocos-kdl-config.cmake @ONLY)
