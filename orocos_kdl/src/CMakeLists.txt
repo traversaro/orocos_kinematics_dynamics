@@ -3,13 +3,12 @@ FILE( GLOB KDL_HPPS [^.]*.hpp [^.]*.inl)
 
 FILE( GLOB UTIL_SRCS utilities/[^.]*.cpp utilities/[^.]*.cxx)
 FILE( GLOB UTIL_HPPS utilities/[^.]*.h utilities/[^.]*.hpp)
-if(MSVC)
-    set(LIB_TYPE STATIC)
-else()
-    set(LIB_TYPE SHARED)
-endif()
+
+set(LIB_TYPE SHARED)
+
 ADD_LIBRARY(orocos-kdl ${LIB_TYPE} ${KDL_SRCS} ${UTIL_SRCS})
-SET_TARGET_PROPERTIES( orocos-kdl PROPERTIES
+SET_TARGET_PROPERTIES( orocos-kdl
+  PROPERTIES DEFINE_SYMBOL "KDL_DLL_EXPORT"
   SOVERSION "${KDL_VERSION_MAJOR}.${KDL_VERSION_MINOR}"
   VERSION "${KDL_VERSION}"
   COMPILE_FLAGS "${CMAKE_CXX_FLAGS_ADD} ${KDL_CFLAGS}"
@@ -18,8 +17,14 @@ SET_TARGET_PROPERTIES( orocos-kdl PROPERTIES
 #INSTALL_TARGETS( /lib orocos-kdl)
 INSTALL(TARGETS orocos-kdl EXPORT orocos-kdl-target DESTINATION lib)
 
+#Configure the file for proper symbol exporting in Windows
+CONFIGURE_FILE( ${PROJ_SOURCE_DIR}/src/kdl-config.h.in ${PROJ_BINARY_DIR}/src/kdl-config.h @ONLY)
+
+# Due to generation of some .h files in build directories, we also need to include some build dirs in our include paths.
+INCLUDE_DIRECTORIES(${PROJ_BINARY_DIR}/src/)
+
 # CMake 2.2:
-INSTALL_FILES( /include/kdl FILES ${KDL_HPPS})
+INSTALL_FILES( /include/kdl FILES ${KDL_HPPS} ${PROJ_BINARY_DIR}/src/kdl-config.h)
 INSTALL_FILES( /include/kdl/utilities FILES ${UTIL_HPPS})
 
 # Orocos convention:

@@ -28,6 +28,8 @@
 #include <assert.h>
 #include "utility.h"
 
+#include <kdl-config.h>
+
 namespace KDL {
 /**
  * Rall1d contains a value, and its gradient, and defines an algebraic structure on this pair.
@@ -46,7 +48,7 @@ namespace KDL {
  * Concrete implementation
  */
 template <typename T,typename V=T,typename S=T>
-class Rall1d
+class KDL_API Rall1d
     {
     public:
         typedef T valuetype;
