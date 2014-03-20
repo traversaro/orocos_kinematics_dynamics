@@ -15,4 +15,4 @@ before_script:
   - cd build
   - cmake -DENABLE_TESTS:BOOL=ON -DCMAKE_CXX_FLAGS:STRING="-Wall" -DCMAKE_BUILD_TYPE=${OROCOS_KDL_BUILD_TYPE} ./..
 
-script: make && make test
+script: make 
