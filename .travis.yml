@@ -22,6 +22,7 @@ before_script:
   #build python bindings 
   - cd python_orocos_kdl
   - mkdir build
+  - cd build
   - cmake -DCMAKE_CXX_FLAGS:STRING="-Wall" -DCMAKE_BUILD_TYPE=${OROCOS_KDL_BUILD_TYPE} ./..
   #compile and install python bindings
   - make
