@@ -1,0 +1,18 @@
+language: cpp
+
+compiler:
+  - gcc
+  - clang
+
+env:
+  - OROCOS_KDL_BUILD_TYPE=Debug
+  - OROCOS_KDL_BUILD_TYPE=Release
+
+before_script:
+  - sudo apt-get install -qq libeigen3-dev
+  - cd orocos_kdl
+  - mkdir build
+  - cd build
+  - cmake -DENABLE_TESTS:BOOL=ON -DCMAKE_CXX_FLAGS:STRING="-Wall" -DCMAKE_BUILD_TYPE=${OROCOS_KDL_BUILD_TYPE} ./..
+
+script: make && make test
