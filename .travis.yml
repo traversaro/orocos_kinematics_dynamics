@@ -15,24 +15,24 @@ before_script:
   - mkdir build
   - cd build
   - cmake -DENABLE_TESTS:BOOL=ON -DCMAKE_CXX_FLAGS:STRING="-Wall" -DCMAKE_BUILD_TYPE=${OROCOS_KDL_BUILD_TYPE} ./..
+  # compile and install orocos_kdl
+  - make
+  - sudo make install
   - cd ../..
   #build python bindings 
   - cd python_orocos_kdl
   - mkdir build
   - cmake -DCMAKE_CXX_FLAGS:STRING="-Wall" -DCMAKE_BUILD_TYPE=${OROCOS_KDL_BUILD_TYPE} ./..
+  #compile and install python bindings
+  - make
+  - sudo make install
   - cd ../..
   
 
 script: 
-  #compile orocos_kdl
-  - cd orocos_kdl/build
-  - make
-  - sudo make install
   #execute orocos_kdl tests
+  - cd orocos_kdl/build
   - make check
   - cd ../..
-  #compile python bindings
-  - cd python_orocos_kdl/build
-  - make
-  - sudo make install
   #execute python bindings tests
+  - cd python_orocos_kdl/build
