@@ -36,3 +36,5 @@ script:
   - cd ../..
   #execute python bindings tests
   - cd python_orocos_kdl/build
+  - python ../tests/PyKDLtest.py 
+
