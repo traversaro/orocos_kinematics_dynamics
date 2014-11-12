@@ -73,7 +73,6 @@ IF(NOT (CMAKE_VERSION VERSION_LESS 2.8.12))
     ENDIF(NOT MSVC)
     
     IF(OROCOSKDL_ENABLE_RPATH)
-        message("---------- ciao")
         #Configure RPATH
         SET(CMAKE_MACOSX_RPATH 1) #enable RPATH on OSX. This also suppress warnings on CMake >= 3.0
         # when building, don't use the install RPATH already
