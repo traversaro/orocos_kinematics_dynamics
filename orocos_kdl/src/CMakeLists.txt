@@ -3,6 +3,16 @@ FILE( GLOB KDL_HPPS [^.]*.hpp [^.]*.inl)
 
 FILE( GLOB UTIL_HPPS utilities/[^.]*.h utilities/[^.]*.hpp)
 
+# Workaround for a Visual Studio 2008/2010 bug affecting Eigen
+# https://connect.microsoft.com/VisualStudio/feedback/details/692988
+# http://eigen.tuxfamily.org/bz/show_bug.cgi?id=83
+# For some reason defining EIGEN_DONT_ALIGN is not working
+if( MSVC_VERSION LESS 1700)
+	list(REMOVE_ITEM KDL_HPPS ${CMAKE_CURRENT_SOURCE_DIR}/chaindynparam.hpp ${CMAKE_CURRENT_SOURCE_DIR}/chainidsolver_vereshchagin.hpp )
+	list(REMOVE_ITEM KDL_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/chaindynparam.cpp ${CMAKE_CURRENT_SOURCE_DIR}/chainidsolver_vereshchagin.cpp )
+endif()
+
+
 INCLUDE(CheckCXXSourceCompiles)
 SET(CMAKE_REQUIRED_FLAGS)
 CHECK_CXX_SOURCE_COMPILES("
